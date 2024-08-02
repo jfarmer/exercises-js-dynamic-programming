@@ -47,7 +47,8 @@ function longestCommonSubsequenceRef(left, right, n = left.length, m = right.len
 }
 
 function longestCommonSubsequenceBottomUp(left, right) {
-  // Create an n-by-m array
+  // Create an (n+1)-by-(m+1) array
+  // The +1 is there to account for the empty subsequence.
   let LCS = Array(left.length + 1).fill().map(() => Array(right.length + 1).fill(0));
 
   for (let n = 0; n <= left.length; n++) {

@@ -14,18 +14,25 @@ def longest_common_subsequence(left, right):
     if len(left) == 0 or len(right) == 0:
         return 0
 
-    last_left = left[-1]
-    last_right = right[-1]
+    n = len(left)
+    m = len(right)
+
+    # Of course we can write `left[-1]` to get the last element,
+    # but we'll use `n` and `m` to parallel the other implementations.
+    last_left = left[n - 1]
+    last_right = right[m - 1]
+
 
     if last_left == last_right:
-        return 1 + longest_common_subsequence(left[:-1], right[:-1])
+        return 1 + longest_common_subsequence(left[0:n - 1], right[0:m - 1])
     else:
         return max(
-            longest_common_subsequence(left, right[:-1]),
-            longest_common_subsequence(left[:-1], right)
+            longest_common_subsequence(left, right[0:m - 1]),
+            longest_common_subsequence(left[0:n - 1], right)
         )
 
 def longest_common_subsequence_ref(left, right, n=None, m=None):
+    # Other languages allow a dynamic default value, e.g., n = len(left)
     if n is None:
         n = len(left)
     if m is None:
@@ -46,8 +53,9 @@ def longest_common_subsequence_ref(left, right, n=None, m=None):
         )
 
 def longest_common_subsequence_bottom_up(left, right):
-    # Create an (n+1)-by-(m+1) array
-    # The +1 is there to account for the empty subsequence.
+    # Create an (n+1)-by-(m+1) array. The +1 is there because we
+    # paramaterize over the length of the subsequences, i.e.,
+    # LCS[0][0] corresponds to the empty subsequence
     LCS = [[0 for _ in range(len(right) + 1)] for _ in range(len(left) + 1)]
 
     for n in range(len(left) + 1):
@@ -71,13 +79,13 @@ def longest_common_subsequence_bottom_up(left, right):
 
 if __name__ == "__main__":
     print('Running sanity checks:')
-    
+
     # Add some sanity checks here
     test_left = ['A', 'B', 'C', 'B', 'E', 'C', 'A']
     test_right = ['B', 'D', 'C', 'A', 'E', 'A']
-    
+
     assert longest_common_subsequence(test_left, test_right) == 4
     assert longest_common_subsequence_ref(test_left, test_right) == 4
     assert longest_common_subsequence_bottom_up(test_left, test_right) == 4
-    
+
     print("All sanity checks passed!")

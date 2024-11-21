@@ -56,7 +56,7 @@ def longest_common_subsequence_bottom_up(left, right):
     # Create an (n+1)-by-(m+1) array. The +1 is there because we
     # paramaterize over the length of the subsequences, i.e.,
     # LCS[0][0] corresponds to the empty subsequence
-    LCS = [[0 for _ in range(len(right) + 1)] for _ in range(len(left) + 1)]
+    LCS = [[None for _ in range(len(right) + 1)] for _ in range(len(left) + 1)]
 
     for n in range(len(left) + 1):
         for m in range(len(right) + 1):
